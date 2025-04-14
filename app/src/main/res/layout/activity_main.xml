@@ -11,10 +11,11 @@
         android:id="@+id/logDisplayTextView"
         android:layout_width="390dp"
         android:layout_height="200dp"
-        android:layout_marginTop="16dip"
+        android:layout_marginTop="48dp"
         android:padding="8dp"
         android:text="Hello World!"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,6 +86,7 @@
         app:layout_constraintStart_toEndOf="@+id/repLabelTextView" />
 
     <Button
+        android:id="@+id/logButton"
         android:layout_width="390dp"
         android:layout_height="205dp"
         android:layout_marginTop="16dp"
