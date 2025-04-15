@@ -41,6 +41,14 @@ public class GymLog {
         return id;
     }
 
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
