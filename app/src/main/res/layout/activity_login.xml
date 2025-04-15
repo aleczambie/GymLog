@@ -9,35 +9,25 @@
 
     <TextView
         android:id="@+id/titleLoginTextView"
-        android:layout_width="match_parent"
-        android:layout_height="150dip"
-        android:layout_margin="16dip"
+        android:layout_width="248dp"
+        android:layout_height="161dp"
+        android:layout_margin="100dip"
+        android:layout_marginTop="100dp"
         android:gravity="center"
-        android:text="@string/welcome_to_the_gynlog_nplease_sign_in"
-        android:textSize="42sp"
+        android:text="@string/welcome_to_the_gymlog_nplease_sign_in"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/userNameLoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_margin="16dp"
-        android:autofillHints="Please enter username"
-        android:inputType="text"
-        android:gravity="center"
-        android:hint="@string/username"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleLoginTextView" />
 
     <EditText
         android:id="@+id/passwordLoginEditText"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="12dp"
         android:autofillHints="Please enter password"
         android:gravity="center"
         android:hint="@string/password"
@@ -52,13 +42,27 @@
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/login"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordLoginEditText" />
 
-
+    <EditText
+        android:id="@+id/userNameLoginEditText"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="Please enter username"
+        android:gravity="center"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleLoginTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
