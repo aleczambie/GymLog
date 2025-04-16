@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/logoutMenuItem"
-        android:title="LOGGED IN"
+        android:title=""
         app:showAsAction="ifRoom"
 
         />

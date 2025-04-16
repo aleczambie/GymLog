@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        repository = GymLogRepository.getRepository(getApplication());
         loginUser();
 
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        repository = GymLogRepository.getRepository(getApplication());
+
         repository.insertDefaultUsers();
 
 
@@ -90,25 +91,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        //check shared preference for logged in user
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY,
-                Context.MODE_PRIVATE);
-        loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE,LOGGED_OUT);
-        if(loggedInUserId != LOGGED_OUT){
-            return;
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, MODE_PRIVATE);
+        loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE, LOGGED_OUT);
+
+        if(loggedInUserId == LOGGED_OUT) {
+            loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
+            if(loggedInUserId == LOGGED_OUT) {
+                startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+                return;
+            }
         }
-        //check intent for login user
-        loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID,LOGGED_OUT);
-        if(loggedInUserId == LOGGED_OUT){
-            return;
-        }
-        LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
-        userObserver.observe(this,user -> {
-            if(user != null){
-                invalidateOptionsMenu();
+
+        // Add this observer:
+        repository.getUserByUserId(loggedInUserId).observe(this, user -> {
+            if(user != null) {
+                this.user = user; // THIS IS CRUCIAL - sets the field
+                Log.d(TAG, "User loaded: " + user.getUsername()); // For debugging
+                invalidateOptionsMenu(); // Refresh menu AFTER user is set
             }
         });
-
     }
 
     @Override
@@ -123,18 +124,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
         item.setVisible(true);
-        if(user == null){
-            return false;
-        }
-        item.setTitle(user.getUsername());
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
-            @Override
-            public boolean onMenuItemClick(@NonNull MenuItem item){
 
+        if(user != null){
+            item.setTitle(user.getUsername());
+            item.setOnMenuItemClickListener(menuItem -> {
                 showLogoutDialogue();
-                return false;
-            }
-        });
+                return true;
+            });
+        }
         return true;
     }
 
@@ -161,12 +158,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor= sharedPreferences.edit();
-        sharedPrefEditor.putInt(SHARED_PREFERENCE_USERID_KEY,LOGGED_OUT);
-        sharedPrefEditor.apply();
-        getIntent().putExtra(MAIN_ACTIVITY_USER_ID,LOGGED_OUT);
-        startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, MODE_PRIVATE);
+        sharedPreferences.edit()
+                .putInt(SHARED_PREFERENCE_USERID_VALUE, LOGGED_OUT) // Use VALUE not KEY
+                .apply();
+
+        // Clear back stack and go to login
+        Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Close current activity
     }
 
     static Intent mainActivityIntentFactory(Context context, int userId) {
