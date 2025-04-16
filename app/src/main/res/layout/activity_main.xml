@@ -9,15 +9,17 @@
 
     <TextView
         android:id="@+id/logDisplayTextView"
-        android:layout_width="390dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="403dp"
+        android:layout_height="220dp"
         android:padding="8dp"
         android:text="Hello World!"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="166dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+        />
 
     <TextView
         android:id="@+id/exerciseLabelTextView"
