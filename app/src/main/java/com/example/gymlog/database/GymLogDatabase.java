@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities = {GymLog.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {GymLog.class, User.class}, version = 2, exportSchema = false)
 public abstract class GymLogDatabase extends RoomDatabase {
 
     public static final String USER_TABLE = "user_table";
@@ -47,6 +47,8 @@ public abstract class GymLogDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {

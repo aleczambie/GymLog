@@ -16,6 +16,8 @@ public interface UserDAO {
 
     @Query("SELECT * from " + GymLogDatabase.USER_TABLE + " WHERE username == :username")
     LiveData<User> getUserByUserName(String username);
+    @Query("SELECT * from " + GymLogDatabase.USER_TABLE + " WHERE username == :userId")
+    LiveData<User> getUserByUserId(int userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User... user);

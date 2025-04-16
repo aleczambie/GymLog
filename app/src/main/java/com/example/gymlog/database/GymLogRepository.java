@@ -71,6 +71,18 @@ public class GymLogRepository {
         });
     }
 
+    public void insertDefaultUsers() {
+        GymLogDatabase.databaseWriteExecutor.execute(() -> {
+            User admin = new User("admin1", "admin1");
+            admin.setAdmin(true);
+            userDAO.insert(admin);
+
+            User testUser = new User("testuser1", "testuser1");
+            userDAO.insert(testUser);
+        });
+    }
+
+
     public void insertUser(User... user){
         GymLogDatabase.databaseWriteExecutor.execute(() ->
         {
@@ -81,6 +93,10 @@ public class GymLogRepository {
 
     public LiveData<User> getUserByUserName(String username) {
         return userDAO.getUserByUserName(username);
+    }
+
+    public LiveData<User> getUserByUserId(int userId) {
+        return userDAO.getUserByUserId(userId);
     }
 
 }
